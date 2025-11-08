@@ -49,9 +49,36 @@ categoryFilter.addEventListener("change", async (e) => {
   displayProducts(filteredProducts);
 });
 
+//Cloudflare worker URL 
+const workerUrl = 'https://loreal-worker.aebake03.workers.dev/'
+
 /* Chat form submission handler - placeholder for OpenAI integration */
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  responseContainer.textContent = "Thinking...";
+
+  //add user message to conversation history
+  messages.push({ role: "user", content: chatInput.value });
+
+  try {
+    //Send post request to Cloudflare worker
+    const response = await fetch(workerUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        messages: messages
+      })
+    });
+
+    //Check if response is not ok
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+
+  }
 
   chatWindow.innerHTML = "Connect to the OpenAI API for a response!";
 });
