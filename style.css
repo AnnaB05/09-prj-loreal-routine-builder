@@ -40,20 +40,29 @@ body {
 .search-section {
   margin: 30px 0;
   display: flex;
+  gap: 15px;
 }
 
-.search-section select {
-  width: 100%;
+.search-section select,
+.search-section input {
   padding: 16px;
   font-size: 18px;
   border: 2px solid #000;
   border-radius: 8px;
-  cursor: pointer;
   background-color: white;
   font-weight: 500;
 }
 
-.search-section select:focus {
+.search-section select {
+  width: 40%;
+}
+
+.search-section input {
+  width: 60%;
+}
+
+.search-section select:focus,
+.search-section input:focus {
   outline: none;
   border-color: #666;
 }
@@ -73,12 +82,28 @@ body {
 
 .chat-window {
   padding: 20px;
+  padding-bottom: 30px; /* Add more padding for scrolling */
   font-size: 18px;
   line-height: 1.5;
   height: 250px;
   overflow-y: auto;
   background: #fafafa;
   margin-bottom: 20px;
+}
+
+.chat-window p {
+  margin-bottom: 16px;
+}
+
+.user-message {
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-left: 20px;
+}
+
+.chat-window .user-message strong {
+  color: #666;
 }
 
 /* placeholder message */
@@ -188,11 +213,23 @@ body {
   min-height: 160px;
 }
 
+/* make room for expandable description and ensure proper stacking */
+.product-card {
+  position: relative;
+}
+
 .product-card img {
   width: 110px;
   height: 110px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+/* visual state for selected cards */
+.product-card.selected {
+  border: 2px solid #000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .product-card .product-info {
@@ -211,6 +248,103 @@ body {
 .product-card p {
   font-size: 14px;
   color: #666;
+}
+
+/* Product description overlay (appears on hover and keyboard focus) */
+.product-card {
+  overflow: hidden; /* ensure overlay doesn't escape rounded corners */
+}
+
+.desc-overlay {
+  position: absolute;
+  inset: 0; /* cover entire card */
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+/* Reveal overlay on hover or when card is focused (keyboard users) */
+.product-card:hover .desc-overlay,
+.product-card:focus-within .desc-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.desc-overlay .description-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fff;
+  max-height: 100%;
+  overflow: auto;
+}
+
+/* Ensure overlay can receive keyboard focus and is visibly focused */
+.desc-overlay:focus {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+/* selected products list */
+#selectedProductsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.selected-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+.selected-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.selected-item .meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.selected-item .name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.selected-item .brand {
+  font-size: 12px;
+  color: #666;
+}
+
+.selected-item .remove-btn {
+  margin-left: 8px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.selected-item .remove-btn:focus {
+  outline: 2px solid #000;
+  border-radius: 4px;
 }
 
 /* selected products */
@@ -251,5 +385,30 @@ body {
 }
 
 .generate-btn i {
+  margin-right: 8px;
+}
+
+.clear-all-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  background: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-all-btn:hover {
+  background: #666;
+}
+
+.clear-all-btn i {
   margin-right: 8px;
 }
