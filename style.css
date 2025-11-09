@@ -412,3 +412,68 @@ body {
 .clear-all-btn i {
   margin-right: 8px;
 }
+
+/* RTL Support - only applies when HTML has dir="rtl" */
+:root:lang(ar),
+:root:lang(he),
+:root:lang(fa),
+:root:lang(ur) {
+  direction: rtl;
+}
+
+/* Move all existing RTL styles under this selector */
+[dir="rtl"] {
+  font-family: "Montserrat", "Arial", sans-serif;
+  text-align: right;
+}
+
+/* Flip margins/padding for RTL */
+[dir="rtl"] .user-message {
+  margin-right: 20px;
+  margin-left: 0;
+}
+
+[dir="rtl"] .selected-item .remove-btn {
+  margin-right: 8px;
+  margin-left: 0;
+}
+
+[dir="rtl"] .generate-btn i,
+[dir="rtl"] .clear-all-btn i {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+/* Adjust flex directions for RTL */
+[dir="rtl"] .chat-form {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .product-card {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .selected-item {
+  flex-direction: row-reverse;
+}
+
+/* Adjust text alignment in various components */
+[dir="rtl"] .product-info,
+[dir="rtl"] .desc-overlay,
+[dir="rtl"] .chat-window,
+[dir="rtl"] .selected-products {
+  text-align: right;
+}
+
+/* Fix button icons alignment */
+[dir="rtl"] .chat-form button,
+[dir="rtl"] .clear-all-btn,
+[dir="rtl"] .generate-btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Adjust search section for RTL */
+[dir="rtl"] .search-section {
+  flex-direction: row-reverse;
+}
